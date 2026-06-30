@@ -10,9 +10,9 @@ const dtsOutFile = 'dist/index.d.ts'
 const umdName = 'LocaleKit'
 
 const formats = [
-	{ format: 'es', extension: 'mjs', minExtension: 'min.mjs' },
-	{ format: 'cjs', extension: 'cjs', minExtension: 'min.cjs', exports: 'named' },
-	{ format: 'umd', extension: 'umd.js', minExtension: 'umd.min.js', exports: 'named' },
+	{format: 'es', extension: 'mjs', minExtension: 'min.mjs'},
+	{format: 'cjs', extension: 'cjs', minExtension: 'min.cjs', exports: 'named'},
+	{format: 'umd', extension: 'umd.js', minExtension: 'umd.min.js', exports: 'named'},
 ]
 
 const jsBundles = formats.map((fmt) => {
@@ -40,7 +40,7 @@ const jsBundles = formats.map((fmt) => {
 	return {
 		input,
 		plugins: [
-			typescript({ tsconfig: './tsconfig.json' }),
+			typescript({tsconfig: './tsconfig.json'}),
 			json(),
 		],
 		output: outputs,
