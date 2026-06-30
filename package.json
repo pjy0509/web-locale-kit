@@ -1,6 +1,6 @@
 {
   "name": "web-locale-kit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TypeScript locale detector — resolves the user's language(s), timezone, UTC offset, and text direction (RTL/LTR) from Intl and navigator, with normalization and graceful fallbacks.",
   "author": "Park Jungyoung <qkrwnss0509@gmail.com> (https://github.com/pjy0509)",
   "type": "module",
