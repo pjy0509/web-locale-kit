@@ -26,12 +26,69 @@ interface IntlLocaleTextInfo {
     direction: 'rtl' | 'ltr';
 }
 
+/**
+ * Resolved locale information for the current environment.
+ *
+ * Detects the user's language(s), timezone, UTC offset, and text direction from
+ * `Intl` and `navigator`, with BCP-47 tag normalization and graceful fallbacks.
+ *
+ * @remarks
+ * All fields are resolved once when the module loads and never update afterward —
+ * a mid-session language or timezone change is not reflected. `language` and
+ * `timezone` may be `null` in environments without `Intl` or `navigator`.
+ *
+ * @example
+ * ```ts
+ * document.documentElement.lang = LocaleKit.language ?? 'en';
+ * document.documentElement.dir = LocaleKit.rtl ? 'rtl' : 'ltr';
+ * ```
+ */
 export interface LocaleKitInstance {
+    /**
+     * The installed package version.
+     */
     readonly version: string;
+
+    /**
+     * The primary normalized BCP-47 language tag (e.g. `'ko-KR'`), or `null` if undetectable.
+     *
+     * @remarks
+     * The first entry of {@link LocaleKitInstance.languages}. Region subtags are
+     * upper-cased and script subtags title-cased during normalization.
+     */
     readonly language: string | null;
+
+    /**
+     * All detected language tags, de-duplicated and normalized, in preference order.
+     *
+     * @remarks
+     * Merged from `Intl.DateTimeFormat`, `navigator.languages`, and legacy
+     * `navigator` language fields. Empty when none can be detected.
+     */
     readonly languages: readonly string[];
+
+    /**
+     * The IANA timezone name (e.g. `'Asia/Seoul'`), or `null` if unavailable.
+     */
     readonly timezone: string | null;
+
+    /**
+     * Minutes ahead of UTC (e.g. Seoul → `540`).
+     *
+     * @remarks
+     * The sign is inverted relative to `Date.prototype.getTimezoneOffset()`, which
+     * returns minutes *behind* UTC (Seoul → `-540`). Here positive means *ahead* of
+     * UTC. Defaults to `0` if the offset cannot be read.
+     */
     readonly offset: number;
+
+    /**
+     * Whether the primary language is written right-to-left.
+     *
+     * @remarks
+     * Resolved via `Intl.Locale.prototype.getTextInfo()` where available, falling
+     * back to a curated list of RTL language subtags. `false` when no language is detected.
+     */
     readonly rtl: boolean;
 }
 
